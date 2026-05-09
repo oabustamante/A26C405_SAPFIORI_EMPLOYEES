@@ -1,0 +1,50 @@
+<mvc:View controllerName="employees.controller.MainView"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout">
+
+    <Page id="page" title="{i18n>title}">
+
+        <Panel headerText="{i18n>panelEmployeesTitle}" expandable="true" expanded="true">
+
+            <GenericTile
+                headerImage="sap-icon://add-employee"
+                press=".onNewEmployee"
+                class="sapUiTinyMarginEnd">
+
+                <TileContent
+                    footer="{i18n>addEmployee}">
+                </TileContent>
+
+            </GenericTile>
+
+            <GenericTile
+                headerImage="sap-icon://employee-lookup"
+                press="onDisplayEmployees"
+                class="sapUiTinyMarginEnd">
+
+                <TileContent
+                    footer="{i18n>displayEmployees}">
+                </TileContent>
+
+            </GenericTile>
+
+        </Panel>
+
+        <Panel headerText="{i18n>panelOrdersTitle}" expandable="true" expanded="true">
+
+            <GenericTile
+                headerImage="sap-icon://signature"
+                press="onSignature"
+                class="sapUiTinyMarginEnd">
+
+                <TileContent
+                    footer="{i18n>panelSignOrdersTitle}">
+                </TileContent>
+
+            </GenericTile>
+
+        </Panel>
+
+    </Page>
+</mvc:View>

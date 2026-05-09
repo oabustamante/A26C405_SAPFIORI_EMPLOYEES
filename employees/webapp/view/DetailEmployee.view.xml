@@ -1,0 +1,59 @@
+<mvc:View
+    controllerName="employees.controller.DetailEmployee"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:uxap="sap.uxap"
+    xmlns="sap.m"
+    xmlns:f="sap.f">
+
+    <uxap:ObjectPageLayout
+        id="ObjectPageLayout"
+        showTitleInHeaderContent="true"
+        alwaysShowContentHeader="false"
+        preserveHeaderStateOnScroll="false"
+        headerContentPinnable="true"
+        isChildPage="true"
+        upperCaseAnchorBar="false">
+
+        <uxap:headerTitle>
+
+            <uxap:ObjectPageDynamicHeaderTitle>
+
+                <uxap:expandedHeading>
+                    <Title text="Titulo aqui" wrapping="true"/>
+				</uxap:expandedHeading>
+
+                <!-- <uxap:actions>
+                    <Button id="btnModCategory" icon="sap-icon://edit" enabled="false" press=".handleEdit"/>
+                    <Button id="btnSavCategory" icon="sap-icon://save" visible="false" press=".handleSave"/>
+                    <Button id="btnCanCategory" icon="sap-icon://cancel" visible="false" press=".handleCancel"/>
+
+                    <Button
+                        icon="sap-icon://decline"
+                        tooltip="{i18n>btnClose}"
+                        press="onClose" />
+                </uxap:actions> -->
+
+            </uxap:ObjectPageDynamicHeaderTitle>
+
+        </uxap:headerTitle>
+
+        <uxap:sections>
+            <uxap:ObjectPageSection>
+                <uxap:subSections>
+                    <!-- <uxap:ObjectPageSubSection title="General"> -->
+                    <uxap:ObjectPageSubSection>
+                        <uxap:blocks>
+                            <Text text="Hola, soy Detail" />
+                        </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+        </uxap:sections>
+
+
+
+
+
+    </uxap:ObjectPageLayout>
+
+</mvc:View>

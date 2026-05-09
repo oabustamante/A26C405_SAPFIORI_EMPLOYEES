@@ -1,0 +1,133 @@
+<mvc:View controllerName="employees.controller.OverviewEmployees"
+    displayBlock="true"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:upload = "sap.m.upload" 
+    xmlns:commons="sap.suite.ui.commons">
+
+    <SplitApp
+		id="splitApp"
+		initialDetail="detailNone"
+		initialMaster="master">
+
+        <masterPages>
+            <Page
+				id="master"
+                showNavButton="true"
+                navButtonPress=".onNavBack"
+				backgroundDesign= "List">
+            
+                <List id="lstEmployees" items="{employees>/Users}">
+                    <items>
+                        <StandardListItem
+                            title="{employees>FirstName} {employees>LastName}"
+                            description="{employees>Dni}"
+                            iconDensityAware="false"
+                            iconInset="false"
+                            type="Active"
+                            press=".onSelectedItem"
+                        />
+                    </items>
+                </List>
+
+            </Page>
+	    </masterPages>
+
+        <detailPages>
+            <Page
+				id="detailNone"
+                showHeader="false"
+				backgroundDesign= "Solid">
+
+                <FlexBox alignItems = "Center" justifyContent = "Center" height = "100%">
+                    <Text text = "{i18n>selectEmployeeLabel}" />
+                </FlexBox>
+            
+            </Page>
+
+            <Page
+				id="detail"
+				backgroundDesign= "Solid">
+
+                <ObjectHeader 
+                    responsive="true"
+                    fullScreenOptimized="false"
+                    icon="sap-icon://employee-pane"
+                    intro="{employees>Dni}"
+                    title="{employees>FirstName} {employees>LastName}"
+                    class="sapUiResponsivePadding--header">
+
+                    <ObjectAttribute title="{i18n>creationDateDetailLabel}"
+                        text="{ path: 'employees>CreationDate', type: 'sap.ui.model.type.Date' }" />
+                    <ObjectAttribute title="{i18n>employeeTypeLabel}"
+                        text="{= ${employees>Type} === '0' ? ${i18n>typInternal} : ${employees>Type} === '1' ? ${i18n>typAutonomous} : ${i18n>typManager} }" />
+                    <ObjectAttribute title="{i18n>commentsDetailLabel}" text="{employees>Comments}" />
+
+
+                    <headerContainer>
+                    
+                        <IconTabBar 
+                            id="iconTab">
+                        
+                            <items>
+                                <IconTabFilter key="attachments" icon="sap-icon://attachment" text="{i18n>attachmentsLabel}">
+
+                                    <upload:UploadSet
+                                        id="uploadSet"
+                                        maxFileNameLength="55"
+                                        maxFileSize="10"
+                                        class="sapUiSmallMarginBottom" 
+                                        items="{employees>UserToAttachment}"
+                                        uploadUrl="/sap/opu/odata/sap/ZEMPLOYEES_SRV/Attachments" 
+                                        afterItemRemoved=".onItemRemoved"
+                                        afterItemAdded=".onItemAdded"
+                                        uploadCompleted=".onUploadCompleted">
+                                        <upload:items>
+                                            <upload:UploadSetItem
+                                                id="uploadSetItem"
+                                                visibleEdit="false"
+                                                fileName="{employees>DocName}"
+                                                openPressed = ".onOpenPressed"
+                                                url="/sap/opu/odata/sap/ZEMPLOYEES_SRV/Attachments(AttId='{employees>AttId}',SapId='{employees>SapId}',EmployeeId='{employees>EmployeeId}')/$value" />
+                                        </upload:items>
+                                    </upload:UploadSet>
+
+                                </IconTabFilter>
+                                
+                                <IconTabFilter key="history" icon="sap-icon://money-bills" text="{i18n>recordLabel}">
+                                    <commons:Timeline
+                                        id="timeline"
+                                        enableDoubleSided = "false"
+                                        groupBy="CreationDate"
+                                        groupByType="Year" 
+                                        alignment="Left"
+                                        showItemFilter="false"
+
+                                        content="{employees>UserToSalary}">
+                                        
+                                        <commons:content>
+                                            <commons:TimelineItem
+                                                id="timelineItem"
+                                                dateTime="{employees>CreationDate}"
+                                                title="{employees>Waers}"
+                                                text="{employees>Comments}"
+                                                userName="{employees>Amount}"
+                                                icon="sap-icon://circle-task">
+                                            </commons:TimelineItem>
+                                        </commons:content>
+                                    </commons:Timeline>
+                                </IconTabFilter>
+                            </items>
+                        
+                        </IconTabBar>
+                    
+                    </headerContainer>
+
+                </ObjectHeader>
+            
+            </Page>
+
+        </detailPages>
+
+	</SplitApp>
+</mvc:View>

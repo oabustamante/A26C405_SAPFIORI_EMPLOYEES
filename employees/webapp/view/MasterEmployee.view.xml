@@ -1,0 +1,53 @@
+<mvc:View
+    controllerName="employees.controller.MasterEmployee"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f">
+
+    <f:DynamicPage
+        id="dynPagCategoryList"
+        preserveHeaderStateOnScroll="true"
+        headerExpanded="true"
+        showFooter="true"
+        fitContent="true">
+<!-- DynamicPage Title -->
+        <f:title>
+            <f:DynamicPageTitle>
+                <!-- <f:heading>
+                    <Title text="{i18n>dynPagMasterEmployeeTitle}"/>
+                </f:heading> -->
+
+                <f:actions>
+                    <ToolbarSpacer/>
+                    <!-- <Button
+                        id="btnAddCategory"
+                        enabled="true"
+                        press="onNewEntity"
+                        icon="sap-icon://add-document"
+                        tooltip="{i18n>btnAddCategoryLabel}"
+                        type="Transparent"/> -->
+                </f:actions>
+            </f:DynamicPageTitle>
+		</f:title>
+<!-- DynamicPage Header -->
+        <f:header>
+		    <!-- <f:DynamicPageHeader pinnable="true">
+                <ToolbarSpacer/>
+                <SearchField
+                    id="searchCategory"
+                    tooltip="{i18n>wrklstSearchCategoryTooltip}"
+                    search=".onSearchCategory"
+                    width="50%">
+                </SearchField>
+            </f:DynamicPageHeader> -->
+		</f:header>
+
+        <f:content>
+
+            <Text text="Hola, soy Master" />
+
+        </f:content>
+
+    </f:DynamicPage>
+
+</mvc:View>

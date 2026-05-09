@@ -1,0 +1,96 @@
+<mvc:View xmlns:core="sap.ui.core"
+    controllerName="employees.controller.NewEmployee"
+    displayBlock="true"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:tnt="sap.tnt"
+    xmlns:form="sap.ui.layout.form">
+
+    <NavContainer id="navContainer">
+    
+        <pages>
+        
+            <f:DynamicPage
+                id="dynPagNewEmployee"
+                showFooter="true">
+
+                <f:title>
+                    <f:DynamicPageTitle>
+                        <f:heading>
+                            <Title text="{i18n>dynPagNewEmployeeTitle}" />
+                        </f:heading>
+                    </f:DynamicPageTitle>
+                </f:title>
+
+                <f:content>
+
+                    <Wizard id="newEmployeeWizard" complete=".onWizardComplete">
+                    
+                        <WizardStep id="wsNewEmployeeStep1" title="{i18n>newEmployeeStep1Title}" validated="false">    <!-- validated="false" hides the preview button -->
+
+                            <core:Fragment fragmentName="employees.fragment.EmployeeInfo1" type="XML" />
+                        
+                        </WizardStep>
+
+                        <WizardStep id="wsNewEmployeeStep2" title="{i18n>newEmployeeStep2Title}" validated="false" activate=".validateStep2Info">
+
+                            <core:Fragment fragmentName="employees.fragment.EmployeeInfo2" type="XML" />
+
+                        </WizardStep>
+
+                        <WizardStep id="wsNewEmployeeStep3" title="{i18n>newEmployeeStep3Title}" validated="true">    <!-- validated="false" hides the preview button -->
+
+                            <core:Fragment fragmentName="employees.fragment.EmployeeInfo3" type="XML" />
+
+                        </WizardStep>
+
+                    </Wizard>
+
+                </f:content>
+
+
+                <f:footer>
+                    <OverflowToolbar>
+                        <ToolbarSpacer/>
+                        <Button id="btnNewEmployeeCancel" text="{i18n>btnNewEmployeeCancelLabel}" press=".onWizardCancel" />
+                    </OverflowToolbar>
+                </f:footer>
+
+            </f:DynamicPage>
+
+<!-- -->
+
+            <f:DynamicPage
+                id="dynPagWizardReview"
+                showFooter="true">
+
+                <f:title>
+                    <f:DynamicPageTitle>
+                        <f:heading>
+                            <Title text="{i18n>dynPagReviewTitle}" />
+                        </f:heading>
+                    </f:DynamicPageTitle>
+                </f:title>
+
+                <f:content>
+
+                    <core:Fragment fragmentName="employees.fragment.ReviewInfo" type="XML" />
+
+                </f:content>
+
+                <f:footer>
+                    <OverflowToolbar>
+                        <ToolbarSpacer/>
+                        <Button text="{i18n>btnNewEmployeeSubmitLabel}" press=".onWizardSubmit" />
+                        <Button text="{i18n>btnNewEmployeeCancelLabel}" press=".onWizardCancel" />
+                    </OverflowToolbar>
+                </f:footer>
+
+            </f:DynamicPage>
+
+        </pages>
+
+    </NavContainer>
+
+</mvc:View>

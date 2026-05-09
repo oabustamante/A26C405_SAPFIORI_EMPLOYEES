@@ -1,0 +1,56 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form">
+
+    <!-- <VBox alignContent="Center" class="sapUiSmallMargin"> -->
+                            
+    <VBox class="sapUiSmallMargin">
+
+        <form:SimpleForm
+            title="{i18n>newEmployeeStep1Title}"
+            editable="false"
+            layout="ResponsiveGridLayout">
+            <form:content>
+                <Label text="{i18n>employeeTypeLabel}"/>
+                <Text text="{= ${/Type} === 0 ? ${i18n>typInternal} : ${/Type} === 1 ? ${i18n>typAutonomous} : ${i18n>typManager}}"/>
+                <Link press=".editStep1" text="{i18n>editStep}" />
+            </form:content>
+        </form:SimpleForm>
+
+        <form:SimpleForm
+            title="{i18n>newEmployeeStep2Title}"
+            editable="false"
+            layout="ResponsiveGridLayout">
+            <form:content>
+                <Label text="{i18n>frmEleFirstName}"/>
+                <Text text="{/FirstName}"/>
+                <Label text="{i18n>frmEleLastName}"/>
+                <Text text="{/LastName}"/>
+                <Label text="{i18n>frmEleDni}"/>
+                <Text text="{/Dni}"/>
+                <Label text="{i18n>frmEleCreationDate}"/>
+                <Text text="{
+                    path: '/CreationDate',
+                    formatter: '.formatter.dateValue'
+                }"/>
+
+                <Link press=".editStep2" text="{i18n>editStep}" />
+            </form:content>
+        </form:SimpleForm>
+
+        <form:SimpleForm
+            title="{i18n>newEmployeeStep3Title}"
+            editable="false"
+            layout="ResponsiveGridLayout">
+            <form:content>
+                <Label text="{i18n>frmEleFirstName}"/>
+                <TextArea value="{/productDescription}" rows="4" editable="false" />
+
+                <Link press=".editStep3" text="{i18n>editStep}" />
+            </form:content>
+        </form:SimpleForm>
+
+        </VBox>
+
+</core:FragmentDefinition>

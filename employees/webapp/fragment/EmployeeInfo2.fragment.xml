@@ -1,0 +1,161 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form">
+
+    <VBox alignContent="Inherit" class="sapUiSmallMargin">
+                            
+        <MessageStrip text="{i18n>step1Text2}" type="Information" showIcon="true" class="sapUiMediumMarginBottom" />
+
+        <form:Form id="frmEmployee" editable="true">
+            <form:layout>
+                <form:ResponsiveGridLayout
+                    labelSpanXL="3"
+                    labelSpanL="3"
+                    labelSpanM="3"
+                    labelSpanS="12"
+                    adjustLabelSpan="false"
+                    emptySpanXL="4"
+                    emptySpanL="4"
+                    emptySpanM="4"
+                    emptySpanS="0"
+                    columnsXL="1"
+                    columnsL="1"
+                    columnsM="1"
+                    singleContainerFullSize="false" />
+            </form:layout>
+            <form:formContainers>
+                <form:FormContainer>
+                    <form:formElements>
+
+                        <form:FormElement label="{i18n>frmEleFirstName}">
+                            <form:fields>
+                                <!-- <Text text="{/FirstName}" /> -->
+                                <Input
+                                    id="firstName" 
+                                    required="true"
+                                    maxLength="40"
+                                    value="{
+                                        path: '/FirstName',
+                                        type: 'sap.ui.model.type.String',
+                                        constraints: {
+                                            minLength: 1,
+                                            maxLength: 40
+                                        }
+                                    }"
+                                    valueState="{validation>/FirstNameState}"
+                                    liveChange=".validateStep2Info"
+                                    change=".changeFirstName" />
+                            </form:fields>
+                        </form:FormElement>
+
+                        <form:FormElement label="{i18n>frmEleLastName}">
+                            <form:fields>
+                                <Input
+                                    id="lastName"
+                                    required="true"
+                                    maxLength="40"
+                                    value="{
+                                        path: '/LastName',
+                                        type: 'sap.ui.model.type.String',
+                                        constraints: {
+                                            minLength: 1,
+                                            maxLength: 40
+                                        }
+                                    }"
+                                    valueState="{validation>/LastNameState}"
+                                    liveChange=".validateStep2Info"
+                                    change=".changeLastNAme" />
+                            </form:fields>
+                        </form:FormElement>
+
+                        <form:FormElement label="{i18n>frmEleDni}" visible="{= ${/Type} === 1 ? false : true }">
+                            <form:fields>
+                                <Input
+                                    id="dni"
+                                    required="true"
+                                    maxLength="40"
+                                    value="{
+                                        path: '/Dni',
+                                        type: 'sap.ui.model.type.String',
+                                        constraints: {
+                                            minLength: 1,
+                                            maxLength: 40
+                                        }
+                                    }"
+                                    valueState="{validation>/DniState}"
+                                    liveChange=".validateStep2Info"
+                                    change=".changeDni" />
+                            </form:fields>
+                        </form:FormElement>
+
+                        <form:FormElement label="{i18n>frmEleCif}" visible="{= ${/Type} !== 1 ? false : true }">
+                            <form:fields>
+                                <Input
+                                    id="cif"
+                                    maxLength="40"
+                                    value="{
+                                        path: '/cif',
+                                        type: 'sap.ui.model.type.String',
+                                        constraints: {
+                                            minLength: 1,
+                                            maxLength: 40
+                                        }
+                                    }"
+                                    valueState="{validation>/CifState}"
+                                    liveChange=".validateStep2Info"
+                                    change="changeCfi" />
+                            </form:fields>
+                        </form:FormElement>
+
+                        <form:FormElement label="{i18n>frmEleAnnualGrossSalary}" visible="{= ${/Type} === 1 ? false : true }">
+                            <form:fields>
+                                <!-- <Text text="{/annualGrossSalary}" /> -->
+                                <Slider
+                                    enableTickmarks="true"
+                                    min="{= ${/Type} === 0 ? ${salaryRanges>/Internal/0/} : ${salaryRanges>/Manager/0/} }"
+                                    max="{= ${/Type} === 0 ? ${salaryRanges>/Internal/1/} : ${salaryRanges>/Manager/1/} }"
+                                    step="{= ${/Type} === 0 ? ${salaryRanges>/Internal/2/} : ${salaryRanges>/Manager/2/} }"
+                                    class="sapUiLargeMarginBottom"
+                                    width="100%"/>
+                            </form:fields>
+                        </form:FormElement>
+
+                        <form:FormElement label="{i18n>frmEleDailyWage}" visible="{= ${/Type} === 1 }">
+                            <form:fields>
+                                <!-- <Text text="{/dailyWage}" /> -->
+                                <Slider
+                                    enableTickmarks="true"
+                                    min="{salaryRanges>/Autonomous/0/}"
+                                    max="{salaryRanges>/Autonomous/1/}"
+                                    step="{salaryRanges>/Autonomous/2/}"
+                                    class="sapUiLargeMarginBottom"
+                                    width="100%"/>
+                            </form:fields>
+                        </form:FormElement>
+
+                        <form:FormElement label="{i18n>frmEleCreationDate}">
+                            <form:fields>
+                                <!-- <Text text="{/CreationDate}"  dateValue="{/CreationDate}"/> -->
+                                <DatePicker
+                                    id="creationDate"
+                                    value="{
+                                        path: '/CreationDate',
+                                        type: 'sap.ui.model.type.Date'
+                                    }"
+                                    required="true"
+                                    valueState="{validation>/CreationDateState}"
+                                    afterValueHelpClose=".validateStep2Info"
+                                    change=".changeCreationDate" />
+                            </form:fields>
+                        </form:FormElement>
+
+                    </form:formElements>
+                </form:FormContainer>
+            </form:formContainers>
+        </form:Form>
+        
+    </VBox>
+
+
+</core:FragmentDefinition>
