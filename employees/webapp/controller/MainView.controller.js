@@ -19,8 +19,8 @@ sap.ui.define([
         },
 
         onSignature : function () {
-            //let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-            //oRouter.navTo("orders", {});
+            const signatureUrl = "https://72ecba47trial-dev-a26c405-2-approuter.cfapps.us10-001.hana.ondemand.com";
+            window.open(signatureUrl, "_blank");
         }
     });
 });

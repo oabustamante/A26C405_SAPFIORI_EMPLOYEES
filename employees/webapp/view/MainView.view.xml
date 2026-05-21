@@ -20,7 +20,7 @@
 
             <GenericTile
                 headerImage="sap-icon://employee-lookup"
-                press="onDisplayEmployees"
+                press=".onDisplayEmployees"
                 class="sapUiTinyMarginEnd">
 
                 <TileContent
@@ -35,7 +35,7 @@
 
             <GenericTile
                 headerImage="sap-icon://signature"
-                press="onSignature"
+                press=".onSignature"
                 class="sapUiTinyMarginEnd">
 
                 <TileContent

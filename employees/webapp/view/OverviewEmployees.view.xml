@@ -17,7 +17,16 @@
                 navButtonPress=".onNavBack"
 				backgroundDesign= "List">
             
-                <List id="lstEmployees" items="{employees>/Users}">
+                <!-- <List id="lstEmployees" items="{employees>/Users}"> -->
+                <List id="lstEmployees"
+                    items="{
+                        path: 'employees>/Users',
+                        filters: [{
+                            path: 'SapId',
+                            operator: 'EQ',
+                            value1: 'orlando_abg@yahoo.com.mx'
+                        }]
+                    }">
                     <items>
                         <StandardListItem
                             title="{employees>FirstName} {employees>LastName}"
@@ -43,6 +52,14 @@
                     <Text text = "{i18n>selectEmployeeLabel}" />
                 </FlexBox>
             
+<footer>
+                    <OverflowToolbar>
+                        <ToolbarSpacer />
+                        <Button text="{i18n>deleteEmployeeBtnText}" press=".onDeleteEmployee" />
+                        <Button text="{i18n>promoteEmployeeBtnText}" press=".onPromoteEmployee" />
+                    </OverflowToolbar>
+                </footer>
+
             </Page>
 
             <Page
@@ -79,8 +96,8 @@
                                         class="sapUiSmallMarginBottom" 
                                         items="{employees>UserToAttachment}"
                                         uploadUrl="/sap/opu/odata/sap/ZEMPLOYEES_SRV/Attachments" 
-                                        afterItemRemoved=".onItemRemoved"
-                                        afterItemAdded=".onItemAdded"
+                                        beforeUploadStarts=".onBeforeUploadStarts"
+                                        afterItemRemoved=".onAfterItemRemoved"
                                         uploadCompleted=".onUploadCompleted">
                                         <upload:items>
                                             <upload:UploadSetItem
@@ -124,6 +141,14 @@
                     </headerContainer>
 
                 </ObjectHeader>
+
+                <footer>
+                    <OverflowToolbar>
+                        <ToolbarSpacer />
+                        <Button text="{i18n>deleteEmployeeBtnText}" press=".onDeleteEmployee" />
+                        <Button text="{i18n>promoteEmployeeBtnText}" press=".onPromoteEmployee" />
+                    </OverflowToolbar>
+                </footer>
             
             </Page>
 

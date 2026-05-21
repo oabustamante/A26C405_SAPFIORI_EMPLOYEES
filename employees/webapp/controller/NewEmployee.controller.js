@@ -3,7 +3,13 @@ sap.ui.define([
     "sap/m/MessageBox",
     "sap/m/plugins/UploadSetwithTable",
     "employees/model/formatter"
-], (BaseController, MessageBox, UploadSetwithTable, Formatter) => {
+],
+/**
+ * 
+ * @param (typeof sap.m.MessageBox) MessageBox 
+ * @param (typeof sap.m.plugins.UploadSetwithTable) UploadSetwithTable 
+ */
+(BaseController, MessageBox, UploadSetwithTable, Formatter) => {
     "use strict";
 
     return BaseController.extend("employees.controller.NewEmployee", {
@@ -40,13 +46,9 @@ sap.ui.define([
                 Type: null,             // {0: Internal, 1: Autonomous, 2: Manager}
                 SapId: null,            // email SAP BTP account
                 FirstName: null,
-                //FirstNameState: "None",
                 LastName: null,
-                //LastNameState: "None",
                 Dni: null,
-                //DniState: "None",
                 CreationDate: null,
-                //CreationDateState: "None",
                 Comments: null,
                 UserToSalary: {
                     Amount: null,       // Daily Wage or Annual Salary
@@ -88,7 +90,6 @@ sap.ui.define([
             }
             this._iSelectedStepIndex ++;
             this._oSelectedStep = oNextStep;
-            // handle buttons visibility
 
             let oModel = this.getModel();
             oModel.setProperty("/Type", 0);
@@ -106,7 +107,6 @@ sap.ui.define([
             }
             this._iSelectedStepIndex ++;
             this._oSelectedStep = oNextStep;
-            // handle buttons visibility
 
             let oModel = this.getModel();
             oModel.setProperty("/Type", 1);
@@ -124,7 +124,6 @@ sap.ui.define([
             }
             this._iSelectedStepIndex ++;
             this._oSelectedStep = oNextStep;
-            // handle buttons visibility
 
             let oModel = this.getModel();
             oModel.setProperty("/Type", 2);
@@ -145,14 +144,11 @@ sap.ui.define([
                 letterList = "TRWAGMYFPDXBNJZSQVHLCKET";
                 letterList = letterList.substring(number, number + 1);
                 if (letterList !== letter.toUpperCase()) {
-                    // Error
                     return "Error";
                 } else {
-                    // None
                     return "None";
                 }
             } else {
-                // Error
                 return "Error";
             }
         },
@@ -162,15 +158,13 @@ sap.ui.define([
             let oModel = this.getModel(), errorFlag = 0;
             let iFirstName = this.byId("firstName").getValue(),
                 iLastName = this.byId("lastName").getValue(),
-                iDni = this.byId("dni").getValue(),
-                iCif = this.byId("cif").getValue();
+                iDni = this.byId("dni").getValue();
+                //iCif = this.byId("cif").getValue();
                 //iCreationDate = this.byId("creationDate").getValue();
 
             let oValidation = this.getModel("validation");
 
             let oCreationDate = this.byId("creationDate").getDateValue();
-
-
 
             // Mandatory fields
             if (iFirstName.length > 1) {
@@ -206,7 +200,7 @@ sap.ui.define([
             }
 
             let EmployeeType = oModel.getProperty("/Type");
-            if (EmployeeType === 1) {
+            /* if (EmployeeType === 1) {
                 if (iCif.length > 1) {
                     //oModel.setProperty("/CifState", "None");
                     oValidation.setProperty("/CifState", "None");
@@ -218,10 +212,6 @@ sap.ui.define([
                 }
             } else {
                 if (iDni.length > 1) {
-                    //oModel.setProperty("/DniState", "None");
-                    //oValidation.setProperty("/DniState", "None");
-                    //console.log("Dni.length > 1: ", iDni);
-                    
                     let sResult = this._validateDni(iDni);
                     if (sResult === "None") {
                         oModel.setProperty("/DniState", "None");
@@ -238,8 +228,20 @@ sap.ui.define([
                     oValidation.setProperty("/DniState", "Error");
                     errorFlag = 1;
                 }
+            } */
+            if (iDni.length > 1) {
+                let sResult = this._validateDni(iDni);
+                if (sResult === "None") {
+                    oValidation.setProperty("/DniState", "None");
+                } else {
+                    errorFlag = 1;
+                    oValidation.setProperty("/DniState", "Error");
+                }
+            } else {
+                oValidation.setProperty("/DniState", "Error");
+                errorFlag = 1;
             }
-            console.log("errorFlag: ", errorFlag);
+//            console.log("errorFlag: ", errorFlag);
             if (errorFlag > 0) {
                 this._oWizard.setCurrentStep(this.byId("wsNewEmployeeStep2"));
                 this._oWizard.invalidateStep(this.byId("wsNewEmployeeStep2"));
@@ -300,7 +302,7 @@ sap.ui.define([
             let oModel = this.getModel();
             let oValidation = this.getModel("validation");
 
-            if (oModel.getProperty("/Type") !== 1) {
+            //if (oModel.getProperty("/Type") !== 1) {
                 let sValue = oEvent.getParameter("value");
                 let sResult = this._validateDni(sValue);
                 if (sResult === "None") {
@@ -312,18 +314,8 @@ sap.ui.define([
                     this._oWizard.invalidateStep(this.byId("wsNewEmployeeStep2"));
                 }
                 oValidation.refresh();
-            }
+            //}
         },
-
-        changeCfi : function () {
-            let oModel = this.getModel();
-            let oValidation = this.getModel("validation");
-
-            if (oModel.getProperty("/Type") === 1) {
-                //
-            }
-        },
-
 
         onWizardComplete : function () {
             this._oNavContainer.to(this.byId("dynPagWizardReview"));
@@ -364,11 +356,7 @@ sap.ui.define([
 				onClose: function (oAction) {
 					if (oAction === MessageBox.Action.YES) {
 						this._oWizard.discardProgress(this._oWizard.getSteps()[0]);
-						//this.byId("wizardDialog").close();
-						//this.getView().getModel().setData(Object.assign({}, oData));
-                        //this.onNavBack();
                         oRouter.navTo("RouteMainView", {});
-                        
 					}
 				}.bind(this)
 			});
@@ -379,12 +367,92 @@ sap.ui.define([
             this._handleMessageBoxOpen(resourceBundle.getText("msgCancelCreateEmployeeProcess"), "warning");
         },
 
-        onWizardSubmit : function () {},
+        onWizardSubmit : function () {
+            //const button = oEvent.getSource();
+            //const context = oEvent.getSource().getBindingContext("employees");
+            let oResourceBundle = this.getResourceBundle();
+            let oRouter = this.getRouter();
+
+            let oModel = this.getModel();
+            let oData = oModel.getData();
+
+            let body = {
+                //EmployeeId: "",  //oData.EmployeeId,
+                SapId: this.getOwnerComponent().SapId,
+                Type: oData.Type.toString(),
+                FirstName: oData.FirstName,
+                LastName: oData.LastName,
+                Dni: oData.Dni,
+                CreationDate: oData.CreationDate,
+                Comments: oData.Comments,
+                UserToSalary: [
+                    {
+                        Amount: parseFloat(oData.UserToSalary.Amount).toString(),
+                        Comments: oData.Comments,
+                        Waers: oData.UserToSalary.Waers
+                    }
+                ]
+            };
+            
+            // Solo funcionó la primera vez
+            /* this.getView().getModel("employees").create("/Users", body, {
+                success: function () {
+                    sap.m.MessageToast.show(oResourceBundle.getText("createEmployeeSuccessMessage"));
+                    //oRouter.navTo("RouteMainView", {});
+                }.bind(this),
+                error: function (e) {
+                    sap.m.MessageToast.show(oResourceBundle.getText("createEmployeeErrorMessage"));
+                }.bind(this)
+            }); */
+
+            /* new Promise((resolve, reject) => {
+                this.getView().getModel("employees").create("/Users", body, {
+                    success: function (data) {
+                        resolve(data);
+                    },
+                    error: function (e) {
+                        reject(e);
+                    }
+                });
+            }).then(
+                function (data) {
+                    //
+                    sap.m.MessageToast.show(oResourceBundle.getText("createEmployeeSuccessMessage"));
+
+                    oRouter.navTo("RouteMainView", {});
+                }.bind(this),
+                function (e) {
+                    sap.m.MessageToast.show(oResourceBundle.getText("createEmployeeErrorMessage"));
+                }.bind(this)
+            ); */
+
+        },
 /**
  * Files
+ * // https://community.sap.com/t5/technology-blog-posts-by-sap/building-an-attachment-upload-and-download-solution-using/ba-p/14039633
  */
-        onBeforeUploadStarts : function () {
+        /* onBeforeUploadStarts : function (oEvent) {
             console.log("onBeforeUploadStarts");
+            const oTable = oEvent.getSource().getParent();
+            const oModel = oTable.getModel();
+            const oItem = oEvent.getParameter("item");
+            const oBinding = oTable.getBinding("items");
+            const oFile = oItem.getFileObject();
+            const sServiceUrl = "/sap/opu/odata/sap/ZEMPLOYEES_SRV/";
+
+            oBinding.create({
+                "filename": oFile.name,
+                "mimeType": oFile.type
+            });
+
+            console.log("oModel: ", oModel);
+           // oModel.submitBatch("attachmentsGroup");
+           // oBinding.attachEventOnce("createCompleted", function (oEvent) {});
+        },
+
+        onBeforeInitiatingItemUpload : function(oEvent) {
+            const oUploader = oEvent.getSource().getUploader();
+            oUploader.setUploadUrl("");
         },
 
         onPluginActivated: function(oEvent) {
@@ -404,18 +472,51 @@ sap.ui.define([
 			}
 			// This code block is only for demonstration purpose to simulate XHR requests, hence restoring the server to not fake the xhr requests.
 			//this.oMockServer.restore();
-		}
+		} */
+
+        onFileBeforeUpload : function (oEvent) {
+            let fileName = oEvent.getParameter("fileName");
+            let objectContext = oEvent.getSource().getBindingContext("northwind").getObject();
+            let oCustomerHeaderSlug = new sap.m.UploadCollectionParameter({
+                name: "slug",
+                value: objectContext.OrderID + ";" + this.getOwnerComponent().SapId + ";" + objectContext.EmployeeID + ";" + fileName
+            });
+            oEvent.getParameters().addHeaderParameter(oCustomerHeaderSlug);
+        },
 
 
-        /* getFileCategories: function() {
-			return [
-				{categoryId: "Invoice", categoryText: "Invoice"},
-				{categoryId: "Specification", categoryText: "Specification"},
-				{categoryId: "Attachment", categoryText: "Attachment"},
-				{categoryId: "Legal Document", categoryText: "Legal Document"}
-			];
-		}, */
+        onFileChange : function (oEvent) {
+            let oUploadCollection = oEvent.getSource();
+            // Header token CSRF - Cross-site request forgery
+            let oCustomerHeaderToken = new sap.m.UploadCollectionParameter({
+                name: "x-csrf-token",
+                value: this.getView().getModel("incidence").getSecurityToken()
+            });
+            oUploadCollection.addHeaderParameter(oCustomerHeaderToken);
+        },
 
+        onFileUploadComplete : function (oEvent) {
+            oEvent.getSource().getBinding("items").refresh();
+        },
+
+
+        onFileDeleted : function (oEvent) {
+            /* let oUploadCollection = oEvent.getSource();
+            let sPath = oEvent.getParameter("item").getBindingContext("incidence").getPath();
+            this.getView().getModel("incidence").remove(sPath, {
+                success: function () {
+                    oUploadCollection.getBinding("items").refresh();
+                }.bind(this),
+                error: function () {
+                    //MessageBox.error(this.getView().getModel("i18n").getResourceBundle().getText("fileNotDeleted"));
+                }
+            }); */
+        },
+
+        downloadFile : function (oEvent) {
+            //const sPath = oEvent.getSource().getBindingContext("incidence").getPath();
+            //window.open("/sap/opu/odata/sap/YSAPUI5_SRV_01" + sPath + "/$value");
+        }
 
 
 

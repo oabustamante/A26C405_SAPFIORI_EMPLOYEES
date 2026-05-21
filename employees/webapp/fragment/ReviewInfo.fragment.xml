@@ -45,7 +45,7 @@
             layout="ResponsiveGridLayout">
             <form:content>
                 <Label text="{i18n>frmEleFirstName}"/>
-                <TextArea value="{/productDescription}" rows="4" editable="false" />
+                <TextArea value="{/Comments}" rows="4" editable="false" />
 
                 <Link press=".editStep3" text="{i18n>editStep}" />
             </form:content>

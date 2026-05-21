@@ -19,13 +19,27 @@
         <form:SimpleForm
                 editable="true"
                 layout="ResponsiveGridLayout">
-            <Label text="Comentario" required="true"/>
+            <Label text="{i18n>labelComments}" required="true"/>
 
-            <Label text="Comentario"/>
-            <TextArea value="{/productDescription}" rows="4"/>
+            <Label text="{i18n>labelComments}"/>
+            <TextArea value="{/Comments}" rows="4"/>
         </form:SimpleForm>
 
-        <Table
+        <UploadCollection
+            id="uploadCollection"
+            maximumFilenameLength="55"
+            maximumFileSize="10"
+            multiple="true"
+            sameFilenameAllowed="true"
+            instantUpload="false"
+            uploadUrl="/sap/opu/odata/sap/ZEMPLOYEES_SRV/Attachments"
+            change="onFileChange"
+            uploadComplete="onFileUploadComplete"
+            beforeUploadStarts="onFileBeforeUpload"
+            fileDeleted="onFileDeleted" />
+
+
+        <!-- <Table
             id="table-uploadSet"
             sticky="ColumnHeaders,HeaderToolbar"
             width="auto"
@@ -34,6 +48,10 @@
             inset="true"
             autoPopinMode="true"
             hiddenInPopin="None"
+            items="{
+                path: 'employees>/Attachments',
+                templateShareable: false
+            }"
             selectionChange=".onSelectionChange">
 
             <headerToolbar>
@@ -46,9 +64,10 @@
 
             <dependents>
                 <plugins.UploadSetwithTable
-                    uploadUrl="/uploadFiles"
+                    uploadUrl="/sap/opu/odata/sap/ZEMPLOYEES_SRV/Attachments"
                     multiple="true"
                     beforeUploadStarts=".onBeforeUploadStarts"
+                    beforeInitiatingItemUpload=".onBeforeInitiatingItemUpload"
                     itemRenamed="onDocumentRenameSuccess"
                     itemRenameCanceled=".onDocumentRenameCancel"
                     uploadCompleted=".onUploadCompleted"
@@ -66,6 +85,9 @@
                                 isTrustedSourcePath="trustedSource"
                             />
                         </rowConfiguration>
+                        <uploader>
+                            <upload.UploaderTableItem httpRequestMethod="Put"/>
+                        </uploader>
                 </plugins.UploadSetwithTable>
             </dependents>
 
@@ -103,7 +125,27 @@
                 <Column id="actionButton" importance="High" />
             </columns>
 
-        </Table>
+
+
+            <items>
+            
+                <ColumnListItem  >
+                
+                    <cells>
+                    
+                        <Text text="{employees>AttId}" />
+                        <Text text="{employees>EmployeeId}" />
+                        <Text text="{employees>SapId}" />
+                        <Text text="{employees>DocName}" />
+                        <Text text="{employees>MimeType}" />
+                    
+                    </cells>
+                
+                </ColumnListItem>
+
+            </items>
+
+        </Table> -->
 
     </VBox>
 
