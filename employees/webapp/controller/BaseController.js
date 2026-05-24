@@ -14,7 +14,6 @@ sap.ui.define([
 		 */
 		getRouter : function () {
 			return UIComponent.getRouterFor(this);
-
 			//return this.getOwnerComponent.getRouter();
 		},
 
@@ -59,10 +58,5 @@ sap.ui.define([
 				this.getRouter().navTo("tiles", {}, true /*no history*/);
 			}
 		}
-
-
     });
-
-
-
 });

@@ -4,14 +4,6 @@
     xmlns:form="sap.ui.layout.form"
     xmlns:upload="sap.m.upload">
 
-    <!-- xmlns:upload="sap.m.upload"
-    xmlns:mdc="sap.ui.mdc"
-    xmlns:mdct="sap.ui.mdc.table"
-    xmlns:Table1="sap.ui.mdc.table.Table"
-    xmlns:vm="sap.ui.fl.variants"
-    xmlns:mdcat="sap.ui.mdc.actiontoolbar"> -->
-
-
     <VBox alignContent="Center" class="sapUiSmallMargin">
                             
         <MessageStrip text="{i18n>step1Text3}" type="Information" showIcon="true" class="sapUiMediumMarginBottom" />
@@ -25,127 +17,12 @@
             <TextArea value="{/Comments}" rows="4"/>
         </form:SimpleForm>
 
-        <UploadCollection
-            id="uploadCollection"
-            maximumFilenameLength="55"
-            maximumFileSize="10"
-            multiple="true"
-            sameFilenameAllowed="true"
-            instantUpload="false"
+        <upload:UploadSet
+            id="uploadSetNewEmployee"
             uploadUrl="/sap/opu/odata/sap/ZEMPLOYEES_SRV/Attachments"
-            change="onFileChange"
-            uploadComplete="onFileUploadComplete"
-            beforeUploadStarts="onFileBeforeUpload"
-            fileDeleted="onFileDeleted" />
-
-
-        <!-- <Table
-            id="table-uploadSet"
-            sticky="ColumnHeaders,HeaderToolbar"
-            width="auto"
-            mode="MultiSelect"
-            fixedLayout="false"
-            inset="true"
-            autoPopinMode="true"
-            hiddenInPopin="None"
-            items="{
-                path: 'employees>/Attachments',
-                templateShareable: false
-            }"
-            selectionChange=".onSelectionChange">
-
-            <headerToolbar>
-                <OverflowToolbar >
-                    <Title text="{i18n>tableAttachmentsTitle}" level="H2" />
-                    <ToolbarSeparator />
-                    <upload:ActionsPlaceholder id="uploadButton" placeholderFor="UploadButtonPlaceholder" />
-                </OverflowToolbar>
-            </headerToolbar>
-
-            <dependents>
-                <plugins.UploadSetwithTable
-                    uploadUrl="/sap/opu/odata/sap/ZEMPLOYEES_SRV/Attachments"
-                    multiple="true"
-                    beforeUploadStarts=".onBeforeUploadStarts"
-                    beforeInitiatingItemUpload=".onBeforeInitiatingItemUpload"
-                    itemRenamed="onDocumentRenameSuccess"
-                    itemRenameCanceled=".onDocumentRenameCancel"
-                    uploadCompleted=".onUploadCompleted"
-                    onActivated=".onPluginActivated"
-                    cloudFilePickerEnabled="true"
-                    actions="uploadButton"
-                    >
-                        <rowConfiguration>
-                            <upload.UploadItemConfiguration
-                                fileNamePath="fileName"
-                                mediaTypePath="mediaType"
-                                urlPath="url"
-                                previewablePath="previewable"
-                                fileSizePath="fileSize"
-                                isTrustedSourcePath="trustedSource"
-                            />
-                        </rowConfiguration>
-                        <uploader>
-                            <upload.UploaderTableItem httpRequestMethod="Put"/>
-                        </uploader>
-                </plugins.UploadSetwithTable>
-            </dependents>
-
-            <columns>
-                <Column id="fileName" importance="High">
-                    <header>
-                        <Label text="File Name" />
-                    </header>
-                </Column>
-                <Column id="id">
-                    <header>
-                        <Label text="ID" />
-                    </header>
-                </Column>
-                <Column id="revision">
-                    <header>
-                        <Label text="Revision" />
-                    </header>
-                </Column>
-                <Column id="status">
-                    <header>
-                        <Label text="Status" />
-                    </header>
-                </Column>
-                <Column id="fileSize">
-                    <header>
-                        <Label text="File Size" />
-                    </header>
-                </Column>
-                <Column id="lastModified">
-                    <header>
-                        <Label text="Last Modified" />
-                    </header>
-                </Column>
-                <Column id="actionButton" importance="High" />
-            </columns>
-
-
-
-            <items>
-            
-                <ColumnListItem  >
-                
-                    <cells>
-                    
-                        <Text text="{employees>AttId}" />
-                        <Text text="{employees>EmployeeId}" />
-                        <Text text="{employees>SapId}" />
-                        <Text text="{employees>DocName}" />
-                        <Text text="{employees>MimeType}" />
-                    
-                    </cells>
-                
-                </ColumnListItem>
-
-            </items>
-
-        </Table> -->
+            instantUpload="false"
+            maxFileNameLength="55"
+            maxFileSize="10" />
 
     </VBox>
 

@@ -14,7 +14,6 @@ sap.ui.define([
 
         onDisplayEmployees : function () {
             let oRouter = this.getRouter();
-            //oRouter.navTo("RouteMasterEmployee", {});
             oRouter.navTo("RouteOverviewEmployees", {});
         },
 

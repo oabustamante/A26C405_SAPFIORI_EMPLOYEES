@@ -30,7 +30,6 @@
 
                         <form:FormElement label="{i18n>frmEleFirstName}">
                             <form:fields>
-                                <!-- <Text text="{/FirstName}" /> -->
                                 <Input
                                     id="firstName" 
                                     required="true"
@@ -69,70 +68,6 @@
                             </form:fields>
                         </form:FormElement>
 
-                        <!-- <form:FormElement label="{i18n>frmEleDni}" visible="{= ${/Type} === 1 ? false : true }">
-                            <form:fields>
-                                <Input
-                                    id="dni"
-                                    required="true"
-                                    maxLength="40"
-                                    value="{
-                                        path: '/Dni',
-                                        type: 'sap.ui.model.type.String',
-                                        constraints: {
-                                            minLength: 1,
-                                            maxLength: 40
-                                        }
-                                    }"
-                                    valueState="{validation>/DniState}"
-                                    liveChange=".validateStep2Info"
-                                    change=".changeDni" />
-                            </form:fields>
-                        </form:FormElement>
-
-                        <form:FormElement label="{i18n>frmEleCif}" visible="{= ${/Type} !== 1 ? false : true }">
-                            <form:fields>
-                                <Input
-                                    id="cif"
-                                    maxLength="40"
-                                    value="{
-                                        path: '/Dni',
-                                        type: 'sap.ui.model.type.String',
-                                        constraints: {
-                                            minLength: 1,
-                                            maxLength: 40
-                                        }
-                                    }"
-                                    valueState="{validation>/CifState}"
-                                    liveChange=".validateStep2Info"
-                                    change="changeCfi" />
-                            </form:fields>
-                        </form:FormElement>
-
-                        <form:FormElement label="{i18n>frmEleAnnualGrossSalary}" visible="{= ${/Type} === 1 ? false : true }">
-                            <form:fields>
-                                <Slider
-                                    enableTickmarks="true"
-                                    min="{= ${/Type} === 0 ? ${salaryRanges>/Internal/0/} : ${salaryRanges>/Manager/0/} }"
-                                    max="{= ${/Type} === 0 ? ${salaryRanges>/Internal/1/} : ${salaryRanges>/Manager/1/} }"
-                                    step="{= ${/Type} === 0 ? ${salaryRanges>/Internal/2/} : ${salaryRanges>/Manager/2/} }"
-                                    class="sapUiLargeMarginBottom"
-                                    value="{/UserToSalary/Amount}"
-                                    width="100%"/>
-                            </form:fields>
-                        </form:FormElement>
-
-                        <form:FormElement label="{i18n>frmEleDailyWage}" visible="{= ${/Type} === 1 }">
-                            <form:fields>
-                                <Slider
-                                    enableTickmarks="true"
-                                    min="{salaryRanges>/Autonomous/0/}"
-                                    max="{salaryRanges>/Autonomous/1/}"
-                                    step="{salaryRanges>/Autonomous/2/}"
-                                    class="sapUiLargeMarginBottom"
-                                    width="100%"/>
-                            </form:fields>
-                        </form:FormElement> -->
-
                         <form:FormElement label="{= ${/Type} === 1 ? ${i18n>frmEleCif} : ${i18n>frmEleDni} }">
                             <form:fields>
                                 <Input
@@ -155,8 +90,8 @@
 
                         <form:FormElement label="{= ${/Type} === 1 ? ${i18n>frmEleDailyWage} :  ${i18n>frmEleAnnualGrossSalary} }">
                             <form:fields>
-                                <!-- <Text text="{/annualGrossSalary}" /> -->
                                 <Slider
+                                    id="sliderSalary"
                                     enableTickmarks="true"
                                     min="{= ${/Type} === 0 ? ${salaryRanges>/Internal/0/} : ${/Type} === 1 ? ${salaryRanges>/Autonomous/0/} : ${salaryRanges>/Manager/0/} }"
                                     max="{= ${/Type} === 0 ? ${salaryRanges>/Internal/1/} : ${/Type} === 1 ?  ${salaryRanges>/Autonomous/1/} : ${salaryRanges>/Manager/1/} }"
@@ -169,7 +104,6 @@
 
                         <form:FormElement label="{i18n>frmEleCreationDate}">
                             <form:fields>
-                                <!-- <Text text="{/CreationDate}"  dateValue="{/CreationDate}"/> -->
                                 <DatePicker
                                     id="creationDate"
                                     value="{
@@ -189,6 +123,5 @@
         </form:Form>
         
     </VBox>
-
 
 </core:FragmentDefinition>

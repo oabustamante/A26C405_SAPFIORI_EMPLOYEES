@@ -3,7 +3,7 @@
     xmlns="sap.m"
     xmlns:l="sap.ui.layout">
 
-    <Page id="page" title="{i18n>title}">
+    <Page id="page" title="{i18n>title}" titleAlignment="Center">
 
         <Panel headerText="{i18n>panelEmployeesTitle}" expandable="true" expanded="true">
 

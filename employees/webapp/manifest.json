@@ -25,15 +25,6 @@
           "odataVersion": "2.0"
         }
       },
-      "YSAPUI5_SRV_01": {
-        "uri": "/sap/opu/odata/sap/YSAPUI5_SRV_01/",
-        "type": "OData",
-        "settings": {
-          "annotations": [],
-          "localUri": "localService/YSAPUI5_SRV_01/metadata.xml",
-          "odataVersion": "2.0"
-        }
-      },
       "ZEMPLOYEES_SRV": {
         "uri": "/sap/opu/odata/sap/ZEMPLOYEES_SRV/",
         "type": "OData",
@@ -86,11 +77,6 @@
         "preload": true,
         "settings": {}
       },
-      "incidence": {
-        "dataSource": "YSAPUI5_SRV_01",
-        "preload": true,
-        "settings": {}
-      },
       "employees": {
         "dataSource": "ZEMPLOYEES_SRV",
         "preload": true,
@@ -137,22 +123,6 @@
           "target":[
             "TargetOverviewEmployees"
           ]
-        },
-        {
-          "name": "RouteMasterEmployee",
-          "pattern": "MasterEmployee",
-          "target": [
-            "TargetMasterEmployee",
-            "TargetDetailEmployee"
-          ]
-        },
-        {
-          "name": "RouteDetailEmployee",
-          "pattern": "DetailEmployee",
-          "target": [
-            "TargetMasterEmployee",
-            "TargetDetailEmployee"
-          ]
         }
       ],
       "targets": {
@@ -167,24 +137,6 @@
         "TargetOverviewEmployees": {
           "id": "overviewEmployees",
           "name": "OverviewEmployees"
-        },
-        "TargetContainer": {
-          "id": "containerEmployee",
-          "name": "ContainerEmployee"
-        },
-        "TargetMasterEmployee": {
-          "id": "masterEmployee",
-          "name": "MasterEmployee",
-          "parent": "TargetContainer",
-          "controlId": "fcl-employee",
-          "controlAggregation": "beginColumnPages"
-        },
-        "TargetDetailEmployee": {
-          "id": "detailEmployee",
-          "name": "DetailEmployee",
-          "parent": "TargetContainer",
-          "controlId": "fcl-employee",
-          "controlAggregation": "midColumnPages"
         }
       }
     },

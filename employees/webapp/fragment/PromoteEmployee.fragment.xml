@@ -1,0 +1,37 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Dialog id="promotionDialog" title="{i18n>promoteEmployeeDialogTitle}" >
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <Label text="{i18n>promoteDialogSalaryLabel}" required="true"/>
+                <Input value="{promotion>/salary}"/>
+                <!-- <Input id="dlgSalary" /> -->
+
+                <Label text="{i18n>promoteDialogCreationDateLabel}" required="true"/>
+                <!-- <DatePicker id="dlgCreationDate" /> -->
+                <DatePicker
+                    value="{
+                        path: 'promotion>/creationDate',
+                        type: 'sap.ui.model.type.Date'
+                    }"
+                    required="true"
+                    valueState="{validation>/CreationDateState}"
+                    afterValueHelpClose=".validateStep2Info"
+                    change=".changeCreationDate" />
+                
+                <Label text="{i18n>promoteDialogCommentsLabel}"/>
+                <TextArea value="{promotion>/comments}" width="100%" rows="2"/>
+                <!-- <TextArea id="dlgComments" width="100%" rows="2" /> -->
+
+            </VBox>
+        </content>
+        <beginButton>
+            <Button text="{i18n>promoteEmployeeOk}" type="Emphasized" press=".onPromoteEmployee"/>
+        </beginButton>
+        <endButton>
+            <Button text="{i18n>promoteEmployeeClose}" type="Emphasized" press=".onPromoteEmployeeDialogClose"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

@@ -2,8 +2,6 @@
 	xmlns="sap.m"
 	xmlns:core="sap.ui.core"
     xmlns:form="sap.ui.layout.form">
-
-    <!-- <VBox alignContent="Center" class="sapUiSmallMargin"> -->
                             
     <VBox class="sapUiSmallMargin">
 
@@ -51,6 +49,6 @@
             </form:content>
         </form:SimpleForm>
 
-        </VBox>
+    </VBox>
 
 </core:FragmentDefinition>

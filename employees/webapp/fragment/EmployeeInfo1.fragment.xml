@@ -2,7 +2,6 @@
 	xmlns="sap.m"
 	xmlns:core="sap.ui.core">
 
-
     <VBox alignContent="Center" class="sapUiSmallMargin">
                             
         <MessageStrip text="{i18n>step1Text1}" type="Information" showIcon="true" class="sapUiMediumMarginBottom" />
@@ -10,9 +9,7 @@
         <HBox justifyContent="Center">
     
             <Button text="{i18n>typInternal}" press=".onInternalEmployee" class="sapUiSmallMarginBeginEnd" />
-
             <Button text="{i18n>typAutonomous}" press="onAutonomousEmployee" />
-
             <Button text="{i18n>typManager}" press="onManagerEmployee" class="sapUiSmallMarginBeginEnd" />
     
         </HBox>

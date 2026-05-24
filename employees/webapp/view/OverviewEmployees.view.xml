@@ -17,7 +17,6 @@
                 navButtonPress=".onNavBack"
 				backgroundDesign= "List">
             
-                <!-- <List id="lstEmployees" items="{employees>/Users}"> -->
                 <List id="lstEmployees"
                     items="{
                         path: 'employees>/Users',
@@ -27,6 +26,13 @@
                             value1: 'orlando_abg@yahoo.com.mx'
                         }]
                     }">
+
+                    <headerToolbar>
+                        <Toolbar id="_IDGenToolbar1">
+                            <SearchField id="searchField" liveChange=".onSearch" />
+                        </Toolbar>
+                    </headerToolbar>
+
                     <items>
                         <StandardListItem
                             title="{employees>FirstName} {employees>LastName}"
@@ -51,14 +57,6 @@
                 <FlexBox alignItems = "Center" justifyContent = "Center" height = "100%">
                     <Text text = "{i18n>selectEmployeeLabel}" />
                 </FlexBox>
-            
-<footer>
-                    <OverflowToolbar>
-                        <ToolbarSpacer />
-                        <Button text="{i18n>deleteEmployeeBtnText}" press=".onDeleteEmployee" />
-                        <Button text="{i18n>promoteEmployeeBtnText}" press=".onPromoteEmployee" />
-                    </OverflowToolbar>
-                </footer>
 
             </Page>
 
@@ -80,7 +78,6 @@
                         text="{= ${employees>Type} === '0' ? ${i18n>typInternal} : ${employees>Type} === '1' ? ${i18n>typAutonomous} : ${i18n>typManager} }" />
                     <ObjectAttribute title="{i18n>commentsDetailLabel}" text="{employees>Comments}" />
 
-
                     <headerContainer>
                     
                         <IconTabBar 
@@ -90,24 +87,11 @@
                                 <IconTabFilter key="attachments" icon="sap-icon://attachment" text="{i18n>attachmentsLabel}">
 
                                     <upload:UploadSet
-                                        id="uploadSet"
-                                        maxFileNameLength="55"
-                                        maxFileSize="10"
-                                        class="sapUiSmallMarginBottom" 
-                                        items="{employees>UserToAttachment}"
+                                        id="uploadSetOverview"
                                         uploadUrl="/sap/opu/odata/sap/ZEMPLOYEES_SRV/Attachments" 
                                         beforeUploadStarts=".onBeforeUploadStarts"
-                                        afterItemRemoved=".onAfterItemRemoved"
-                                        uploadCompleted=".onUploadCompleted">
-                                        <upload:items>
-                                            <upload:UploadSetItem
-                                                id="uploadSetItem"
-                                                visibleEdit="false"
-                                                fileName="{employees>DocName}"
-                                                openPressed = ".onOpenPressed"
-                                                url="/sap/opu/odata/sap/ZEMPLOYEES_SRV/Attachments(AttId='{employees>AttId}',SapId='{employees>SapId}',EmployeeId='{employees>EmployeeId}')/$value" />
-                                        </upload:items>
-                                    </upload:UploadSet>
+                                        uploadCompleted=".onUploadCompleted"
+                                        afterItemRemoved=".onAfterItemRemoved" />
 
                                 </IconTabFilter>
                                 
@@ -146,7 +130,7 @@
                     <OverflowToolbar>
                         <ToolbarSpacer />
                         <Button text="{i18n>deleteEmployeeBtnText}" press=".onDeleteEmployee" />
-                        <Button text="{i18n>promoteEmployeeBtnText}" press=".onPromoteEmployee" />
+                        <Button text="{i18n>promoteEmployeeBtnText}" press=".onPromoteEmployeeOpenDialog" />
                     </OverflowToolbar>
                 </footer>
             

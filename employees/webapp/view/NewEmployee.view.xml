@@ -8,7 +8,6 @@
     xmlns:form="sap.ui.layout.form">
 
     <NavContainer id="navContainer">
-    
         <pages>
         
             <f:DynamicPage
@@ -18,7 +17,7 @@
                 <f:title>
                     <f:DynamicPageTitle>
                         <f:heading>
-                            <Title text="{i18n>dynPagNewEmployeeTitle}" />
+                            <Title text="{i18n>dynPagNewEmployeeTitle}" textAlign="Center" />
                         </f:heading>
                     </f:DynamicPageTitle>
                 </f:title>
@@ -28,27 +27,20 @@
                     <Wizard id="newEmployeeWizard" complete=".onWizardComplete">
                     
                         <WizardStep id="wsNewEmployeeStep1" title="{i18n>newEmployeeStep1Title}" validated="false">    <!-- validated="false" hides the preview button -->
-
                             <core:Fragment fragmentName="employees.fragment.EmployeeInfo1" type="XML" />
-                        
                         </WizardStep>
 
                         <WizardStep id="wsNewEmployeeStep2" title="{i18n>newEmployeeStep2Title}" validated="false" activate=".validateStep2Info">
-
                             <core:Fragment fragmentName="employees.fragment.EmployeeInfo2" type="XML" />
-
                         </WizardStep>
 
-                        <WizardStep id="wsNewEmployeeStep3" title="{i18n>newEmployeeStep3Title}" validated="true">    <!-- validated="false" hides the preview button -->
-
+                        <WizardStep id="wsNewEmployeeStep3" title="{i18n>newEmployeeStep3Title}" validated="true">
                             <core:Fragment fragmentName="employees.fragment.EmployeeInfo3" type="XML" />
-
                         </WizardStep>
 
                     </Wizard>
 
                 </f:content>
-
 
                 <f:footer>
                     <OverflowToolbar>
@@ -58,8 +50,6 @@
                 </f:footer>
 
             </f:DynamicPage>
-
-<!-- -->
 
             <f:DynamicPage
                 id="dynPagWizardReview"
@@ -74,9 +64,7 @@
                 </f:title>
 
                 <f:content>
-
                     <core:Fragment fragmentName="employees.fragment.ReviewInfo" type="XML" />
-
                 </f:content>
 
                 <f:footer>
@@ -90,7 +78,6 @@
             </f:DynamicPage>
 
         </pages>
-
     </NavContainer>
 
 </mvc:View>

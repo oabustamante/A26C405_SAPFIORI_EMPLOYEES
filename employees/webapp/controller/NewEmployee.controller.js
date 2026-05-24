@@ -1,7 +1,6 @@
 sap.ui.define([
     "./BaseController",
     "sap/m/MessageBox",
-    "sap/m/plugins/UploadSetwithTable",
     "employees/model/formatter"
 ],
 /**
@@ -9,7 +8,7 @@ sap.ui.define([
  * @param (typeof sap.m.MessageBox) MessageBox 
  * @param (typeof sap.m.plugins.UploadSetwithTable) UploadSetwithTable 
  */
-(BaseController, MessageBox, UploadSetwithTable, Formatter) => {
+(BaseController, MessageBox, Formatter) => {
     "use strict";
 
     return BaseController.extend("employees.controller.NewEmployee", {
@@ -17,30 +16,15 @@ sap.ui.define([
         formatter: Formatter,
 
         onInit : function () {
-            /* */
-            this._oNavContainer = this.byId("navContainer");
-            this._oWizardContentPage = this.byId("dynPagNewEmployee");
-            
-            this._oWizard = this.byId("newEmployeeWizard");
-            /* */
-            /* */
-            //this.documentTypes = this.getFileCategories();
-            /* */
             let oRouter = this.getRouter();
 			oRouter.getRoute("RouteNewEmployee").attachMatched(this._onRouteMatched, this);
-
         },
 
         _onRouteMatched : function () {
-            /* this._oNavContainer = this.byId("navContainer");
+            this._oNavContainer = this.byId("navContainer");
             this._oWizardContentPage = this.byId("dynPagNewEmployee");
-
-            this._oWizard = this.byId("newEmployeeWizard"); */
-            this._oWizard.invalidateStep(this.byId("wsNewEmployeeStep1"));
-            this._oWizard.invalidateStep(this.byId("wsNewEmployeeStep2"));
-
-            this._iSelectedStepIndex = 0;
-            this._oSelectedStep = this._oWizard.getSteps()[this._iSelectedStepIndex];
+            this._oWizard = this.byId("newEmployeeWizard");
+            this._oSlider = this.byId("sliderSalary");
 
             this._oEmployee = {
                 Type: null,             // {0: Internal, 1: Autonomous, 2: Manager}
@@ -78,7 +62,7 @@ sap.ui.define([
             let oModelSalaryRanges = new sap.ui.model.json.JSONModel(oSalaryRanges);
             this.setModel(oModelSalaryRanges, "salaryRanges");
         },
-
+// >> Employee type selection
         onInternalEmployee : function () {
             this._iSelectedStepIndex = this._oWizard.getSteps().indexOf(this._oSelectedStep);
             let oNextStep = this._oWizard.getSteps()[this._iSelectedStepIndex + 1];
@@ -129,6 +113,7 @@ sap.ui.define([
             oModel.setProperty("/Type", 2);
             oModel.refresh();
         },
+// << Employee type selection
 // Dni validation
         _validateDni : function (sDni) {
             let dni = sDni,
@@ -152,37 +137,26 @@ sap.ui.define([
                 return "Error";
             }
         },
-
-// Step 2 Validate mandatory fields
+// >> Step 2 Validate mandatory fields
         validateStep2Info : function () {
             let oModel = this.getModel(), errorFlag = 0;
             let iFirstName = this.byId("firstName").getValue(),
                 iLastName = this.byId("lastName").getValue(),
-                iDni = this.byId("dni").getValue();
-                //iCif = this.byId("cif").getValue();
-                //iCreationDate = this.byId("creationDate").getValue();
-
+                iDni = this.byId("dni").getValue(),
+                EmployeeType = oModel.getProperty("/Type");
             let oValidation = this.getModel("validation");
-
             let oCreationDate = this.byId("creationDate").getDateValue();
 
-            // Mandatory fields
             if (iFirstName.length > 1) {
-                //oModel.setProperty("/FirstNameState", "None");
                 oValidation.setProperty("/FirstNameState", "None");
             } else {
-                //this._oWizard.setCurrentStep(this.byId("wsNewEmployeeStep2"));
-                //oModel.setProperty("/FirstNameState", "Error");
                 oValidation.setProperty("/FirstNameState", "Error");
                 errorFlag = 1;
             }
 
             if (iLastName.length > 1) {
-                //oModel.setProperty("/LastNameState", "None");
                 oValidation.setProperty("/LastNameState", "None");
             } else {
-                //this._oWizard.setCurrentStep(this.byId("wsNewEmployeeStep2"));
-                //oModel.setProperty("/LastNameState", "Error");
                 oValidation.setProperty("/LastNameState", "Error");
                 errorFlag = 1;
             }
@@ -199,36 +173,6 @@ sap.ui.define([
                 errorFlag = 1;
             }
 
-            let EmployeeType = oModel.getProperty("/Type");
-            /* if (EmployeeType === 1) {
-                if (iCif.length > 1) {
-                    //oModel.setProperty("/CifState", "None");
-                    oValidation.setProperty("/CifState", "None");
-                } else {
-                    //this._oWizard.setCurrentStep(this.byId("wsNewEmployeeStep2"));
-                    //oModel.setProperty("/CifState", "Error");
-                    oValidation.setProperty("/CifState", "Error");
-                    errorFlag = 1;
-                }
-            } else {
-                if (iDni.length > 1) {
-                    let sResult = this._validateDni(iDni);
-                    if (sResult === "None") {
-                        oModel.setProperty("/DniState", "None");
-                        //this._oWizard.validateStep(this.byId("wsNewEmployeeStep2"));
-                    } else {
-                        //this._oWizard.setCurrentStep(this.byId("wsNewEmployeeStep2"));
-                        errorFlag = 1;
-                        oModel.setProperty("/DniState", "Error");
-                        //this._oWizard.invalidateStep(this.byId("wsNewEmployeeStep2"));
-                    }
-                } else {
-                    //this._oWizard.setCurrentStep(this.byId("wsNewEmployeeStep2"));
-                    //oModel.setProperty("/DniState", "Error");
-                    oValidation.setProperty("/DniState", "Error");
-                    errorFlag = 1;
-                }
-            } */
             if (iDni.length > 1) {
                 let sResult = this._validateDni(iDni);
                 if (sResult === "None") {
@@ -241,7 +185,7 @@ sap.ui.define([
                 oValidation.setProperty("/DniState", "Error");
                 errorFlag = 1;
             }
-//            console.log("errorFlag: ", errorFlag);
+
             if (errorFlag > 0) {
                 this._oWizard.setCurrentStep(this.byId("wsNewEmployeeStep2"));
                 this._oWizard.invalidateStep(this.byId("wsNewEmployeeStep2"));
@@ -256,11 +200,9 @@ sap.ui.define([
 
             if (sValue.length > 0) {
                 oModel.setProperty("/FirstNameState", "None");
-                //this._oWizard.validateStep(this.byId("wsNewEmployeeStep2"));
             } else {
                 this._oWizard.setCurrentStep(this.byId("wsNewEmployeeStep2"));
                 oModel.setProperty("/FirstNameState", "Error");
-                //this._oWizard.invalidateStep(this.byId("wsNewEmployeeStep2"));
             }
             oModel.refresh();
         },
@@ -271,56 +213,45 @@ sap.ui.define([
 
             if (sValue.length > 0) {
                 oModel.setProperty("/LastNameState", "None");
-                //this._oWizard.validateStep(this.byId("wsNewEmployeeStep2"));
             } else {
                 this._oWizard.setCurrentStep(this.byId("wsNewEmployeeStep2"));
                 oModel.setProperty("/LastNameState", "Error");
-                //this._oWizard.invalidateStep(this.byId("wsNewEmployeeStep2"));
             }
             oModel.refresh();
         },
 
         changeCreationDate : function (oEvent) {
-            //let oModel = this.getModel();
             let oModel = this.getModel("validation");
             let sValue = oEvent.getParameter("value");
             let bValid = oEvent.getParameter("valid");
 
             if (sValue && bValid) {
                 oModel.setProperty("/CreationDateState", "None");
-                //this._oWizard.validateStep(this.byId("wsNewEmployeeStep2"));
             } else {
                 this._oWizard.setCurrentStep(this.byId("wsNewEmployeeStep2"));
                 oModel.setProperty("/CreationDateState", "Error");
-                //this._oWizard.invalidateStep(this.byId("wsNewEmployeeStep2"));
             }
-
             oModel.refresh();
         },
 
         changeDni : function (oEvent) {
             let oModel = this.getModel();
             let oValidation = this.getModel("validation");
-
-            //if (oModel.getProperty("/Type") !== 1) {
-                let sValue = oEvent.getParameter("value");
-                let sResult = this._validateDni(sValue);
-                if (sResult === "None") {
-                    oValidation.setProperty("/DniState", "None");
-                    //this._oWizard.validateStep(this.byId("wsNewEmployeeStep2"));
-                } else {
-                    this._oWizard.setCurrentStep(this.byId("wsNewEmployeeStep2"));
-                    oValidation.setProperty("/DniState", "Error");
-                    this._oWizard.invalidateStep(this.byId("wsNewEmployeeStep2"));
-                }
-                oValidation.refresh();
-            //}
+            let sValue = oEvent.getParameter("value");
+            let sResult = this._validateDni(sValue);
+            if (sResult === "None") {
+                oValidation.setProperty("/DniState", "None");
+            } else {
+                this._oWizard.setCurrentStep(this.byId("wsNewEmployeeStep2"));
+                oValidation.setProperty("/DniState", "Error");
+                this._oWizard.invalidateStep(this.byId("wsNewEmployeeStep2"));
+            }
+            oValidation.refresh();
         },
-
+// << Step 2 Validate mandatory fields
         onWizardComplete : function () {
             this._oNavContainer.to(this.byId("dynPagWizardReview"));
         },
-
 
         backToWizardContent: function () {
 			this._oNavContainer.backToPage(this._oWizardContentPage.getId());
@@ -331,7 +262,6 @@ sap.ui.define([
 				this._oWizard.goToStep(this._oWizard.getSteps()[iStepNumber]);
 				this._oNavContainer.detachAfterNavigate(fnAfterNavigate);
 			}.bind(this);
-
 			this._oNavContainer.attachAfterNavigate(fnAfterNavigate);
 			this.backToWizardContent();
         },
@@ -368,8 +298,6 @@ sap.ui.define([
         },
 
         onWizardSubmit : function () {
-            //const button = oEvent.getSource();
-            //const context = oEvent.getSource().getBindingContext("employees");
             let oResourceBundle = this.getResourceBundle();
             let oRouter = this.getRouter();
 
@@ -377,7 +305,6 @@ sap.ui.define([
             let oData = oModel.getData();
 
             let body = {
-                //EmployeeId: "",  //oData.EmployeeId,
                 SapId: this.getOwnerComponent().SapId,
                 Type: oData.Type.toString(),
                 FirstName: oData.FirstName,
@@ -393,19 +320,8 @@ sap.ui.define([
                     }
                 ]
             };
-            
-            // Solo funcionó la primera vez
-            /* this.getView().getModel("employees").create("/Users", body, {
-                success: function () {
-                    sap.m.MessageToast.show(oResourceBundle.getText("createEmployeeSuccessMessage"));
-                    //oRouter.navTo("RouteMainView", {});
-                }.bind(this),
-                error: function (e) {
-                    sap.m.MessageToast.show(oResourceBundle.getText("createEmployeeErrorMessage"));
-                }.bind(this)
-            }); */
 
-            /* new Promise((resolve, reject) => {
+            new Promise((resolve, reject) => {
                 this.getView().getModel("employees").create("/Users", body, {
                     success: function (data) {
                         resolve(data);
@@ -416,114 +332,76 @@ sap.ui.define([
                 });
             }).then(
                 function (data) {
-                    //
+                    this._startUploadFiles(data.EmployeeId);
                     sap.m.MessageToast.show(oResourceBundle.getText("createEmployeeSuccessMessage"));
-
+                    this._setView();
                     oRouter.navTo("RouteMainView", {});
                 }.bind(this),
                 function (e) {
                     sap.m.MessageToast.show(oResourceBundle.getText("createEmployeeErrorMessage"));
                 }.bind(this)
-            ); */
-
+            );
         },
-/**
- * Files
- * // https://community.sap.com/t5/technology-blog-posts-by-sap/building-an-attachment-upload-and-download-solution-using/ba-p/14039633
- */
-        /* onBeforeUploadStarts : function (oEvent) {
-            console.log("onBeforeUploadStarts");
-            const oTable = oEvent.getSource().getParent();
-            const oModel = oTable.getModel();
-            const oItem = oEvent.getParameter("item");
-            const oBinding = oTable.getBinding("items");
-            const oFile = oItem.getFileObject();
-            const sServiceUrl = "/sap/opu/odata/sap/ZEMPLOYEES_SRV/";
 
-            oBinding.create({
-                "filename": oFile.name,
-                "mimeType": oFile.type
+        _setView : function () {
+            this._handleNavigationToStep(0);
+            this._oWizard.discardProgress(this._oWizard.getSteps()[0]);
+
+            this.byId("uploadSetNewEmployee").destroyItems();
+            this.byId("uploadSetNewEmployee").destroyIncompleteItems();
+        },
+
+        _startUploadFiles : function (employeeId) {
+            let oUploadSet = this.byId("uploadSetNewEmployee");
+            let incompleteItems = oUploadSet.getIncompleteItems();
+            let sSapId =this.getOwnerComponent().SapId;
+
+            oUploadSet.removeAllHeaderFields();
+
+            incompleteItems.forEach(item => {
+                let oFile = item.getFileObject();
+
+                item.addHeaderField(new sap.ui.core.Item({
+                    key: "slug",
+                    text: sSapId + ";" + employeeId + ";" + oFile.name
+                }));
+
+                item.addHeaderField(new sap.ui.core.Item({
+                    key: "x-csrf-token",
+                    text: this.getView().getModel("employees").getSecurityToken()
+                }));
+
+                oUploadSet.uploadItem(item);
             });
+        }
+//-----
+        /* onFileDeleted : function (oEvent) {
+        }, */
 
-            console.log("oModel: ", oModel);
-           // oModel.submitBatch("attachmentsGroup");
-           // oBinding.attachEventOnce("createCompleted", function (oEvent) {});
-        },
-
-        onBeforeInitiatingItemUpload : function(oEvent) {
-            const oUploader = oEvent.getSource().getUploader();
-            oUploader.setUploadUrl("");
-        },
-
-        onPluginActivated: function(oEvent) {
-			this.oUploadPluginInstance = oEvent.getParameter("oPlugin");
-		},
-
-        onUploadCompleted: function(oEvent) {
-			//const oModel = this.byId("table-uploadSet").getModel("documents");
-			const iResponseStatus = oEvent.getParameter("status");
-
-			// check for upload is sucess
-			if (iResponseStatus === 201) {
-				//oModel.refresh(true);
-				setTimeout(function() {
-					MessageToast.show("Document Added");
-				}, 1000);
-			}
-			// This code block is only for demonstration purpose to simulate XHR requests, hence restoring the server to not fake the xhr requests.
-			//this.oMockServer.restore();
-		} */
-
-        onFileBeforeUpload : function (oEvent) {
-            let fileName = oEvent.getParameter("fileName");
-            let objectContext = oEvent.getSource().getBindingContext("northwind").getObject();
-            let oCustomerHeaderSlug = new sap.m.UploadCollectionParameter({
-                name: "slug",
-                value: objectContext.OrderID + ";" + this.getOwnerComponent().SapId + ";" + objectContext.EmployeeID + ";" + fileName
-            });
-            oEvent.getParameters().addHeaderParameter(oCustomerHeaderSlug);
-        },
-
-
-        onFileChange : function (oEvent) {
-            let oUploadCollection = oEvent.getSource();
-            // Header token CSRF - Cross-site request forgery
-            let oCustomerHeaderToken = new sap.m.UploadCollectionParameter({
-                name: "x-csrf-token",
-                value: this.getView().getModel("incidence").getSecurityToken()
-            });
-            oUploadCollection.addHeaderParameter(oCustomerHeaderToken);
-        },
-
-        onFileUploadComplete : function (oEvent) {
-            oEvent.getSource().getBinding("items").refresh();
-        },
-
-
-        onFileDeleted : function (oEvent) {
-            /* let oUploadCollection = oEvent.getSource();
-            let sPath = oEvent.getParameter("item").getBindingContext("incidence").getPath();
-            this.getView().getModel("incidence").remove(sPath, {
-                success: function () {
-                    oUploadCollection.getBinding("items").refresh();
-                }.bind(this),
-                error: function () {
-                    //MessageBox.error(this.getView().getModel("i18n").getResourceBundle().getText("fileNotDeleted"));
-                }
-            }); */
-        },
-
-        downloadFile : function (oEvent) {
+        /* downloadFile : function (oEvent) {
             //const sPath = oEvent.getSource().getBindingContext("incidence").getPath();
             //window.open("/sap/opu/odata/sap/YSAPUI5_SRV_01" + sPath + "/$value");
-        }
+        } */
+// << UploadCollection
+        /* onBeforeUploadStarts : function (oEvent) {
+            const sSapId = this.getOwnerComponent().SapId;
+            let items = oEvent.getParameter("item");
+            let sFileName = items.getFileName();
+            let oModel = this.getView().getModel("employees");
+            let sToken = oModel.getSecurityToken();
+            
+            items.addHeaderField(new sap.ui.core.Item({
+                key: "slug",
+                text: sSapId + ";" + sFileName + ";" + sFileName
+            }));
+            items.addHeaderField(new sap.ui.core.Item({
+                key: "x-csrf-token",
+                text: sToken
+            }));
+        } */
 
-
-
-
-
-
-
-
+        /* onUploadCompleted: function(oEvent) {
+            let oUploadCollection = oEvent.getSource();
+        } */
     });
 });
