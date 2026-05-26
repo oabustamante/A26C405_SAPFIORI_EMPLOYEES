@@ -10,9 +10,7 @@
     <NavContainer id="navContainer">
         <pages>
         
-            <f:DynamicPage
-                id="dynPagNewEmployee"
-                showFooter="true">
+            <f:DynamicPage id="dynPagNewEmployee" showFooter="true">
 
                 <f:title>
                     <f:DynamicPageTitle>
@@ -51,9 +49,7 @@
 
             </f:DynamicPage>
 
-            <f:DynamicPage
-                id="dynPagWizardReview"
-                showFooter="true">
+            <f:DynamicPage id="dynPagWizardReview" showFooter="true">
 
                 <f:title>
                     <f:DynamicPageTitle>

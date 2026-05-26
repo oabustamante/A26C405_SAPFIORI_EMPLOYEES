@@ -2,20 +2,13 @@
     displayBlock="true"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
-    xmlns:upload = "sap.m.upload" 
+    xmlns:upload="sap.m.upload" 
     xmlns:commons="sap.suite.ui.commons">
 
-    <SplitApp
-		id="splitApp"
-		initialDetail="detailNone"
-		initialMaster="master">
+    <SplitApp id="splitApp" initialDetail="detailNone" initialMaster="master">
 
         <masterPages>
-            <Page
-				id="master"
-                showNavButton="true"
-                navButtonPress=".onNavBack"
-				backgroundDesign= "List">
+            <Page id="master" showNavButton="true" navButtonPress=".onNavBack" backgroundDesign="List">
             
                 <List id="lstEmployees"
                     items="{
@@ -24,11 +17,10 @@
                             path: 'SapId',
                             operator: 'EQ',
                             value1: 'orlando_abg@yahoo.com.mx'
-                        }]
-                    }">
+                    }]}">
 
                     <headerToolbar>
-                        <Toolbar id="_IDGenToolbar1">
+                        <Toolbar>
                             <SearchField id="searchField" liveChange=".onSearch" />
                         </Toolbar>
                     </headerToolbar>
@@ -49,25 +41,20 @@
 	    </masterPages>
 
         <detailPages>
-            <Page
-				id="detailNone"
-                showHeader="false"
-				backgroundDesign= "Solid">
+            <Page id="detailNone" showHeader="false" backgroundDesign="Solid">
 
-                <FlexBox alignItems = "Center" justifyContent = "Center" height = "100%">
-                    <Text text = "{i18n>selectEmployeeLabel}" />
+                <FlexBox alignItems="Center" justifyContent="Center" height="100%">
+                    <Text text="{i18n>selectEmployeeLabel}" />
                 </FlexBox>
 
             </Page>
 
-            <Page
-				id="detail"
-				backgroundDesign= "Solid">
+            <Page id="detail" backgroundDesign="Solid">
 
                 <ObjectHeader 
                     responsive="true"
                     fullScreenOptimized="false"
-                    icon="sap-icon://employee-pane"
+                    icon="{= ${employees>Type} === '0' ? 'sap-icon://employee-pane' : ${employees>Type} === '1' ? 'sap-icon://employee' : 'sap-icon://employee-approvals' }"
                     intro="{employees>Dni}"
                     title="{employees>FirstName} {employees>LastName}"
                     class="sapUiResponsivePadding--header">
@@ -80,8 +67,7 @@
 
                     <headerContainer>
                     
-                        <IconTabBar 
-                            id="iconTab">
+                        <IconTabBar id="iconTab">
                         
                             <items>
                                 <IconTabFilter key="attachments" icon="sap-icon://attachment" text="{i18n>attachmentsLabel}">

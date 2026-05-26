@@ -8,12 +8,10 @@
                             
         <MessageStrip text="{i18n>step1Text3}" type="Information" showIcon="true" class="sapUiMediumMarginBottom" />
 
-        <form:SimpleForm
-                editable="true"
-                layout="ResponsiveGridLayout">
+        <form:SimpleForm editable="true" layout="ResponsiveGridLayout">
             <Label text="{i18n>labelComments}" required="true"/>
 
-            <Label text="{i18n>labelComments}"/>
+            <!-- <Label text="{i18n>labelComments}"/> -->
             <TextArea value="{/Comments}" rows="4"/>
         </form:SimpleForm>
 

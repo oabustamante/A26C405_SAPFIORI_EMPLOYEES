@@ -25,6 +25,7 @@ sap.ui.define([
             this._oWizardContentPage = this.byId("dynPagNewEmployee");
             this._oWizard = this.byId("newEmployeeWizard");
             this._oSlider = this.byId("sliderSalary");
+            this._oWizard.invalidateStep(this.byId("wsNewEmployeeStep1"));
 
             this._oEmployee = {
                 Type: null,             // {0: Internal, 1: Autonomous, 2: Manager}
@@ -346,9 +347,17 @@ sap.ui.define([
         _setView : function () {
             this._handleNavigationToStep(0);
             this._oWizard.discardProgress(this._oWizard.getSteps()[0]);
+            this._oWizard.setCurrentStep(this.byId("wsNewEmployeeStep1"));
+            //this._oWizard.invalidateStep(this.byId("wsNewEmployeeStep1"));
 
             this.byId("uploadSetNewEmployee").destroyItems();
             this.byId("uploadSetNewEmployee").destroyIncompleteItems();
+
+            let oValidationModel = this.getModel("validation");
+            oValidationModel.setProperty("/FirstNameState", "Error");
+            oValidationModel.setProperty("/LastNameState", "Error");
+            oValidationModel.setProperty("/DniState", "Error");
+            oValidationModel.setProperty("/CreationDateState", "Error");
         },
 
         _startUploadFiles : function (employeeId) {

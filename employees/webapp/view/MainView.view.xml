@@ -7,41 +7,20 @@
 
         <Panel headerText="{i18n>panelEmployeesTitle}" expandable="true" expanded="true">
 
-            <GenericTile
-                headerImage="sap-icon://add-employee"
-                press=".onNewEmployee"
-                class="sapUiTinyMarginEnd">
-
-                <TileContent
-                    footer="{i18n>addEmployee}">
-                </TileContent>
-
+            <GenericTile headerImage="sap-icon://add-employee" press=".onNewEmployee" class="sapUiTinyMarginEnd">
+                <TileContent footer="{i18n>addEmployee}" />
             </GenericTile>
 
-            <GenericTile
-                headerImage="sap-icon://employee-lookup"
-                press=".onDisplayEmployees"
-                class="sapUiTinyMarginEnd">
-
-                <TileContent
-                    footer="{i18n>displayEmployees}">
-                </TileContent>
-
+            <GenericTile headerImage="sap-icon://employee-lookup" press=".onDisplayEmployees" class="sapUiTinyMarginEnd">
+                <TileContent footer="{i18n>displayEmployees}" />
             </GenericTile>
 
         </Panel>
 
         <Panel headerText="{i18n>panelOrdersTitle}" expandable="true" expanded="true">
 
-            <GenericTile
-                headerImage="sap-icon://signature"
-                press=".onSignature"
-                class="sapUiTinyMarginEnd">
-
-                <TileContent
-                    footer="{i18n>panelSignOrdersTitle}">
-                </TileContent>
-
+            <GenericTile headerImage="sap-icon://signature" press=".onSignature" class="sapUiTinyMarginEnd">
+                <TileContent footer="{i18n>panelSignOrdersTitle}" />
             </GenericTile>
 
         </Panel>
